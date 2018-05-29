@@ -5,10 +5,16 @@
  */
 package Cliente3;
 
+import java.net.Socket;
+
 /**
  *
  * @author KratosKike
  */
 class LanzaTareas {
+
+    LanzaTareas(Socket clientSocket) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -26,7 +26,7 @@ public class Server3 {
                 System.out.println();
                 //en espera de conexion, si existe la acepta
                 Socket clientSocket = serverSocket.accept();
-                //NewHilo hilo = new NewHilo(serverSocket.accept());
+                NewHilo hilo = new NewHilo(serverSocket.accept());
                 System.out.println("Ha entrado un cliente");
                 //hilo.start();
                 
