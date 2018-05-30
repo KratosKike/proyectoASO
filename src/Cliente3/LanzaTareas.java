@@ -5,16 +5,39 @@
  */
 package Cliente3;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author KratosKike
  */
 class LanzaTareas {
-
-    LanzaTareas(Socket clientSocket) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //Socket utilizado para comunicarse con el servidor.
+    private Socket socketCliente;
+    //Stream utilizado para el envío de objetos al servidor.
+    private ObjectOutputStream objectOutputStream;
+    //Stream utilizado para el envío de objetos al servidor.
+    private ObjectInputStream objectInputStream;
+    
+    LanzaTareas(Socket socketCliente) {
+        this.socketCliente = socketCliente;
+        
+    }
+    
+    public void run(){
+    
+        try {
+            objectOutputStream=new ObjectOutputStream(socketCliente.getOutputStream());
+            objectInputStream=new ObjectInputStream(socketCliente.getInputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(LanzaTareas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
 }
