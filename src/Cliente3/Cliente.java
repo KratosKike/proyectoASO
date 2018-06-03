@@ -29,8 +29,15 @@ public class Cliente {
             //abre socket
             clientSocket = new Socket(SERVER, PORT);
             
+            System.out.println("");
+            
             //si conecta el socket, abrir el hilo lanza tareas
             LanzaTareas lt = new LanzaTareas(clientSocket);
+            lt.start();
+            
+            //Abrir ventana menu Testeo
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }

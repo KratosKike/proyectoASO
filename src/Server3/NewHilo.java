@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,29 +27,49 @@ class NewHilo extends Thread{
     private ObjectInputStream objectInputStream;
     //Variable para identificar si esta escuchando el hilo
     private boolean escuchando;
+    //variable protocolo
+    Protocolo p = new Protocolo();
+    
+    
     NewHilo(Socket socketCliente) {
             this.socketCliente = socketCliente;
-            try {
-                objectOutputStream = new ObjectOutputStream(socketCliente.getOutputStream());
-                objectInputStream = new ObjectInputStream(socketCliente.getInputStream());
-            } catch (IOException ex) {
-                System.err.println("Error en la inicialización del ObjectOutputStream y el ObjectInputStream");        }
+                /*try {
+                    //objectOutputStream = new ObjectOutputStream(socketCliente.getOutputStream());
+                    //objectInputStream = new ObjectInputStream(socketCliente.getInputStream());
+                } catch (IOException ex) {
+                    System.err.println("Error en la inicialización del ObjectOutputStream y el ObjectInputStream");
+                }*/
             }   
     
     
     public void run(){
         try{
+            
+            objectOutputStream = new ObjectOutputStream(socketCliente.getOutputStream());
+            objectInputStream = new ObjectInputStream(socketCliente.getInputStream());
+                
+            System.out.println(socketCliente+" entrando en espera a recibir");
             escuchar();
+            
+            
         } catch (Exception ex) {
-            System.err.println("Error al llamar al método readLine del hilo del cliente.");
+            System.err.println("Error.");
         }
         desconectar();
     }
     
     public void escuchar(){
+        System.out.println("Ha entrado en metodo escuchar");
         while(escuchando){
             try {
+                //Cuando recibe un objeto se activa
+                System.out.println("Esperando objeto de: "+socketCliente);
                 Object aux=objectInputStream.readObject();
+                System.out.println("Ha recibido un objeto");
+                 if(aux instanceof LinkedList){
+                    p.ejecutar((LinkedList<String>)aux);
+                 }
+                
             } catch (IOException ex) {
                 Logger.getLogger(NewHilo.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
